@@ -1,0 +1,18 @@
+<h4>{{sensorName}}: {{sensorAddr}}</h4>
+<google-chart *ngIf="temperatureGaugeData"
+              [type]="'Gauge'"
+              [data]="temperatureGaugeData"
+              [options]="temperatureGaugeOptions"
+              routerLink="sensor/{{sensorAddr}}/temp"
+              >
+</google-chart>
+<google-chart *ngIf="humidityGaugeData"
+              [type]="'Gauge'"
+              [data]="humidityGaugeData"
+              [options]="humidityGaugeOptions"
+              routerLink="sensor/{{sensorAddr}}/humid"
+              >
+</google-chart>
+<div *ngIf="lastReading">
+  Last reading: {{lastReading}}
+</div>

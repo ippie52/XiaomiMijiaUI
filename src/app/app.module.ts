@@ -4,12 +4,17 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { GoogleChartsModule } from 'angular-google-charts';
+import { SensorLiveComponent } from './widgets/sensor-live/sensor-live.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SensorLiveComponent
   ],
   imports: [
     BrowserModule,
+    GoogleChartsModule,
     AppRoutingModule
   ],
   providers: [],
