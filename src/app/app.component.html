@@ -14,9 +14,10 @@
 
 <ng-container *ngIf="(sensors$ | async) as sensors">
   <div *ngFor="let sensor of sensors | keyvalue">
-    {{sensor.value | json}}
+    <!-- {{sensor.value | json}} -->
     <app-sensor-live [sensor]="sensor.value">
     </app-sensor-live>
+    <hr>
   </div>
 </ng-container>
 

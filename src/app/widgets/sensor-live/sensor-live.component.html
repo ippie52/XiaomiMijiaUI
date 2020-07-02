@@ -1,5 +1,7 @@
-<h4>{{sensorName}}: {{sensorAddr}}</h4>
-<google-chart *ngIf="temperatureGaugeData"
+<h3>{{sensorName}}: {{sensorAddr}}</h3>
+<h1>{{sensorData.last_reading.temperature}}°C | {{sensorData.last_reading.humidity}}%</h1>
+<h2>{{sensorTempF}} °F</h2>
+<!-- <google-chart *ngIf="temperatureGaugeData"
               [type]="'Gauge'"
               [data]="temperatureGaugeData"
               [options]="temperatureGaugeOptions"
@@ -12,7 +14,18 @@
               [options]="humidityGaugeOptions"
               routerLink="sensor/{{sensorAddr}}/humid"
               >
-</google-chart>
+</google-chart> -->
+<!-- <google-chart *ngIf="(historyData$ | async) as historyData"
+              (click)="getHistory()"
+              [type]="'Line'"
+
+              >
+
+</google-chart> -->
 <div *ngIf="lastReading">
   Last reading: {{lastReading}}
+</div>
+<button type="button" (click)="getHistory()"> History </button>
+<div *ngIf="(historyData$ | async) as historyData">
+  {{historyData | json}}
 </div>

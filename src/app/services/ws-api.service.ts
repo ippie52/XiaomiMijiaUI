@@ -73,8 +73,11 @@ export class WsApiService implements OnDestroy {
   public sensorsSource = new BehaviorSubject<Map<string, XiaomiSensor>>(undefined);
 
   /// @brief  Source subject for all history data.
-  public historySource = new BehaviorSubject<Map<string, XiaomiSensorHistoryData>>(
-    new Map<string, XiaomiSensorHistoryData>());
+  public historySource = new BehaviorSubject<XiaomiSensorHistoryData>({
+    sensor_name: undefined,
+    sensor_addr: undefined,
+    history: undefined
+  });
 
   /// @brief  The messages subject, for pushing new messages to the WebSocket server.
   private messages: Subject<WssMessage>;

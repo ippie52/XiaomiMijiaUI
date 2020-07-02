@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { XiaomiSensor, XiaomiSensorReading } from '../../services/ws-api.service';
+import { WsApiService, XiaomiSensor, XiaomiSensorReading, XiaomiSensorHistoryData } from '../../services/ws-api.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sensor-live',
@@ -26,9 +27,10 @@ export class SensorLiveComponent implements OnInit {
     this.lastReading = this.sensorData.last_reading.timestamp;
     this.sensorName = this.sensorData.sensor_name;
     this.sensorAddr = this.sensorData.addr;
+    this.sensorTempF = ((this.sensorData.last_reading.temperature * 9.0) / 5.0) + 32.0;
   }
 
-  private sensorData: XiaomiSensor = undefined;
+  public sensorData: XiaomiSensor = undefined;
 
   public temperatureGaugeData = undefined;
 
@@ -46,6 +48,8 @@ export class SensorLiveComponent implements OnInit {
     min: 21,
     max: 40
   };
+
+  public sensorTempF: number;
 
   public humidityGaugeData = undefined;
 
@@ -68,9 +72,34 @@ export class SensorLiveComponent implements OnInit {
 
   public sensorAddr: string = undefined;
 
-  constructor() { }
+  public historyData$: Observable<XiaomiSensorHistoryData>;
+
+  constructor(private wss: WsApiService) {
+    this.historyData$ = wss.historySource.asObservable();
+  }
 
   ngOnInit(): void {
+  }
+
+  getHistory() {
+    this.wss.requestHistory(this.sensorAddr);
+  }
+
+  historyGraphData(data: XiaomiSensorHistoryData) {
+    const hData = [
+      ['Time stamp', 'Temperature °C', 'Humidity %'],
+    ];
+    // if (data !== undefined && data.history !== undefined) {
+    //   console.log(data);
+    //   data.history.forEach((value: XiaomiSensorReading, key: Date) => {
+    //     const entry = [key.toTimeString(), value.temperature.toString(), value.humidity.toString()];
+    //     hData.push(entry);
+    //   });
+    //   console.log('---------------------');
+    //   console.log(hData);
+    //   console.log('---------------------');
+    // }
+    return hData;
   }
 
 }
